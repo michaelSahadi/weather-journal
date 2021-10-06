@@ -7,23 +7,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Weather Journal</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
   <div class="today">
     <div class="user-input">
       <h1 class="feel">Today I feel...</h1>
-      <input type="text" class="1">
+      <!-- <label for="feel">Today I feel...</label> -->
+      <input type="text" class="input-stuff" id="input-feelings" placeholder="I'm hot today" rows="2">
+      <!-- <textarea class="input-stuff" id="input-feelings" width="100%"></textarea> -->
       <p class="zip-code">Zip Code</p>
-      <input type="text" class="zip">
+      <input type="text" class="input-stuff" id="input-zip" placeholder="00000">
     </div>
-    <div class="curent">
-      <img class="current-conditions" src="images/storm-sm.svg" alt="Thunder Storm">
-      <p class="low-temp-main">68</p>
-      <p class="high-temp-main">81</p>
+    <div class="current">
+      <img class="current-conditions" src="images/storm-sm.svg" alt="">
+      <div class="HL">
+        <p class="low-temp-main">L: 68</p>
+        <p class="high-temp-main">H: 81</p>
+      </div>
       <h1 class="current-temp">79&deg</h1>
     </div>
   </div>
+  <div class="bar"></div>
   <div class="5-day">
     <div class="dividing-line"></div>
     <div class="day-1">
@@ -35,8 +45,8 @@
     <div class="day-2">
       <p class="day-2">Wed</p>
       <img src="images/cloud-sm.svg" alt="" class="day-2-conditions">
-      <p class="low-temp-day-2">65</p>
-      <p class="high-temp-day-2">81</p>
+      <p class="low-temp-day-2">L: 65</p>
+      <p class="high-temp-day-2">H: 81</p>
     </div>
     <div class="day-3">
       <p class="day-3">Wed</p>

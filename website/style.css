@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+}
+
+html,
+body {
+  font-family: "Comic Neue", cursive;
+  font-size: 16px;
+  font-weight: 400;
+  height: 100vh;
+}
+
+.input-stuff {
+  font-weight: bold;
+}
+
+input {
+  height: 1.875rem;
+  width: 100%;
+  border-radius: 0;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-width: 0.1875rem;
+  border-color: #000000;
+}
+
+.today {
+  margin: 3.75rem 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 0.75fr;
+}
+
+.feel {
+  margin: 0.625rem 0;
+}
+
+.zip-code {
+  margin: 0.625rem 0;
+  font-weight: bold;
+}
+
+.current {
+  margin-left: 1.875rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "current current"
+    "HL CT";
+}
+
+.current-conditions {
+  margin-left: 1.875rem;
+  height: 6.625rem;
+  width: 5.375rem;
+  grid-area: current;
+}
+
+.HL {
+  grid-area: HL;
+}
+
+.high-temp-main {
+  margin-top: 1.5625rem;
+}
+
+.current-temp {
+  margin-top: 0.3125rem;
+  font-size: 4rem;
+  grid-area: CT;
+}
+
+.bar {
+  height: 3px;
+  width: 100%;
+  margin-top: -5rem;
+  background: #000000;
+}
