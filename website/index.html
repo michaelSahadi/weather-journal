@@ -23,7 +23,7 @@
       <!-- <textarea class="input-stuff" id="input-feelings" width="100%"></textarea> -->
       <p class="zip-code">Zip Code</p>
       <input type="text" class="input-stuff" id="zip" placeholder="Enter Zip Code Here">
-      <button class="submit" id="generate" onclick="getInputValue();" value="submit">submit</button>
+      <button class="submit" id="generate" value="submit">submit</button>
     </div>
     <div class="current">
       <img class="current-conditions" src="images/thunderstorm.svg" alt="">
@@ -74,8 +74,10 @@
       <h1 class="felt">Yesterday I felt...</h1>
       <p class="response">Really really sleepy</p>
     </div>
-    <img src="images/partly-sm.svg" alt="" class="past-condition">
-    <h1 class="past-temp">82&deg</h1>
+    <div class="yesturday-conditions">
+      <img src="images/scattered-clouds.svg" alt="" class="past-condition">
+      <h1 class="past-temp">82&deg</h1>
+    </div>
   </div>
   <script src="app.js"></script>
 </body>

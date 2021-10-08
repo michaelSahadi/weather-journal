@@ -104,7 +104,7 @@ input {
   justify-content: space-around;
 }
 
-.yesturday {
+.yesterday {
   margin: 1.25rem 1.25rem;
   display: grid;
   grid-template-columns: 1fr 0.75fr;

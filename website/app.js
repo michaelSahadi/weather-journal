@@ -1,22 +1,26 @@
 let apiUrl = 'http://api.openweathermap.org/data/2.5/forecast?zip=';
 let apiKey = '&appid=49dd336c6342a0fbf7eba30d6af0f432'
+const input = document.querySelector('#zip');
+const buttonInput = document.querySelector('.submit');
 
+// Event for the Enter key
+input.addEventListener('keyup', function (event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    const userZip = document.querySelector('#zip').value;
+    console.log(userZip);
+    console.log(apiUrl);
+    getWeather(apiUrl, userZip, apiKey);
+  }
+});
 
-// const input = document.getElementById("input-zip");
-// input.addEventListener("keyup", function (event) {
-//   if (event.keyCode === 13) {
-//     event.preventDefault();
-//     document.getElementById(".submit").click();
-//     getWeather(apiUrl, userZip, apiKey);
-//   }
-// });
-
-function getInputValue() {
+// Click event for the submit button
+buttonInput.addEventListener('click', function getInputValue() {
   const userZip = document.querySelector('#zip').value;
   console.log(userZip);
   console.log(apiUrl);
   getWeather(apiUrl, userZip, apiKey);
-}
+});
 
 function convert(temp) {
   return Math.round((temp - 273.15) * 1.8) + 32;
@@ -32,8 +36,10 @@ const getWeather = async (apiUrl, userZip, apiKey) => {
     let maxTemp = obj.list[0].main.temp_max;
     let sky = obj.list[0].weather[0].id;
     let skyIcon = "images/thunderstorm.svg";
+    console.log(sky);
     const condition = 8;
-    let fah = Math.round((currentTemp - 273.15) * 1.8) + 32;
+    // let fah = Math.round((currentTemp - 273.15) * 1.8) + 32;
+    let fah = convert(currentTemp);
     let minT = Math.round((minTemp - 273.15) * 1.8) + 32;
     let maxT = Math.round((maxTemp - 273.15) * 1.8) + 32;
 
@@ -67,11 +73,11 @@ const getWeather = async (apiUrl, userZip, apiKey) => {
       document.querySelector('.current-conditions').src = skyIcon;
     }
 
-    for (let i = 0; i < 40; i++) {
-      let fiveDay = []
-      fiveDay.push = obj.list[i].dt_txt;
-      console.log(fiveDay);
-    }
+    // for (let i = 0; i < 40; i++) {
+    //   let fiveDay = []
+    //   fiveDay.push = obj.list[i].dt_txt;
+    //   console.log(fiveDay);
+    // }
 
   } catch (error) {
     // throw error;
