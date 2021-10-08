@@ -42,7 +42,7 @@ input {
 }
 
 .current {
-  margin-left: 1.875rem;
+  margin-left: 1.25rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
@@ -72,6 +72,21 @@ input {
   grid-area: CT;
 }
 
+.submit {
+  margin: 1.25rem 0;
+  width: 4.6875rem;
+  background: #ffffff;
+  border-width: 3px;
+  border-radius: 10px;
+  border-color: #000000;
+  font-weight: bold;
+  color: #000000;
+}
+
+.weather-icon {
+  width: 3.49rem;
+  height: 3rem;
+}
 .bar {
   height: 3px;
   width: 100%;
@@ -79,7 +94,7 @@ input {
 }
 
 #upper {
-  margin-top: -2.25rem;
+  margin-top: -1.75rem;
 }
 
 .day {
