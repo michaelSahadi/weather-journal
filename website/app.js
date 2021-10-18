@@ -3,38 +3,58 @@ const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
 const input = document.querySelector('#zip');
 const buttonInput = document.querySelector('.submit');
 const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
-// Event for the Enter key
+
+// Enter key and Click event
 input.addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
     event.preventDefault();
-    const userZip = document.querySelector('#zip').value;
-    getWeather(apiUrl, userZip, apiKey);
-    // getForecast(fiveDayUrl, userZip, apiKey);
+    document.getElementById('generate').click();
   }
 });
 
-// Convert Unix time code to something a Humon can read
-function timeConverter(UNIX_timestamp) {
-  // let a = new Date(UNIX_timestamp * 1000);
-  // let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  // let year = a.getFullYear();
-  // let month = months[a.getMonth()];
-  // let date = a.getDate();
-  // let hour = a.getHours();
-  // let min = a.getMinutes();
-  // let sec = a.getSeconds();
-  // let time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+// Grab data
+document.getElementById('generate').onclick = function () {
+  const userZip = document.querySelector('#zip').value;
+  getWeather(apiUrl, userZip, apiKey)
+    .then(function (obj) {
+      const lon = obj.coord.lon;
+      const lat = obj.coord.lat;
+      getForecast(fiveDayUrl, lat, lon, apiKey);
+    })
 
+}
+// Click event for the submit button
+// buttonInput.addEventListener('click', function getInputValue() {
+//   const userZip = document.querySelector('#zip').value;
+//   getWeather(apiUrl, userZip, apiKey);
+// });
+
+
+
+// Convert Unix time code to something a Humon can read
+const timeConverter = (UNIX_timestamp) => {
+  const a = new Date(UNIX_timestamp * 1000);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const year = a.getFullYear();
+  const month = months[a.getMonth()];
+  const date = a.getDate();
+  // const hour = a.getHours();
+  // const min = a.getMinutes();
+  // const sec = a.getSeconds();
+  // const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+  console.log(date);
   const i = 0;
   const data = { list: [{ dt: UNIX_timestamp }] };
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const dayNum = new Date(data.list[i].dt * 1000).getDay();
   const result = days[dayNum];
+  console.log(data);
+  console.log(result);
   return result;
 };
 
 // Icon function
-function icons(sky) {
+const icons = (sky) => {
   const condition = 8;
   let skyIcon = "images/thunderstorm.svg";
   const id = `a${sky}`;
@@ -102,65 +122,73 @@ function icons(sky) {
     a804: 'broken-clouds.svg',
   };
   skyIcon = code[id];
-  return skyIcon
+  return skyIcon;
 }
 
-
-// Click event for the submit button
-buttonInput.addEventListener('click', function getInputValue() {
-  const userZip = document.querySelector('#zip').value;
-  getWeather(apiUrl, userZip, apiKey);
-});
-
-// Grab current conditions
+// Current conditions & UI update
 const getWeather = async (apiUrl, userZip, apiKey) => {
-  const res = await fetch(`${apiUrl}${userZip}&units=imperial&cnt=5&appid=${apiKey}`)
+  try {
+    const res = await fetch(`${apiUrl}${userZip}&units=imperial&cnt=5&appid=${apiKey}`)
+    const obj = await res.json();
+    // console.log(obj);
+    const userFeeling = document.querySelector('#feelings').value;
+    const lon = obj.coord.lon;
+    const lat = obj.coord.lat;
+    const cord = { lat, lon }
+    const currentTemp = Math.round(obj.main.temp);
+    const minTemp = Math.round(obj.main.temp_min);
+    const maxTemp = Math.round(obj.main.temp_max);
+    const sky = obj.weather[0].id;
 
-  // try {
-  const obj = await res.json();
-  console.log(obj);
-  const lon = obj.coord.lon;
-  const lat = obj.coord.lat;
-  console.log(lon, lat);
-  let currentTemp = Math.round(obj.main.temp);
-  let minTemp = Math.round(obj.main.temp_min);
-  let maxTemp = Math.round(obj.main.temp_max);
-  let sky = obj.weather[0].id;
+    document.querySelector('.current-temp').textContent = `${currentTemp}\u00B0`;
+    document.querySelector('#low').textContent = minTemp;
+    document.querySelector('#hi').textContent = maxTemp;
+    document.querySelector('.current-conditions').src = `images/${icons(sky)}`;
 
-  getForecast(fiveDayUrl, lat, lon, apiKey)
+    const data = { minTemp, maxTemp, userFeeling };
+    const options = {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    };
 
-  document.querySelector('.current-temp').textContent = currentTemp;
-  document.querySelector('#low').textContent = minTemp;
-  document.querySelector('#hi').textContent = maxTemp;
-  console.log(`ìmages/${icons(sky)}`);
-  document.querySelector('.current-conditions').src = 'images/' + icons(sky);
-}
-// } catch (error) {
-//   // throw error;
-//   // appropriately handle the error
-//   console.log("error", error);
-// }
+    console.log(options);
+    fetch('/api', options);
 
+    return obj;
+  } catch (error) {
+    // throw error;
+    // appropriately handle the error
+    console.log('error', error);
+  }
+};
 
+// Five day forcast & UI update
 const getForecast = async (fiveDayUrl, lat, lon, apiKey) => {
-  const res2 = await fetch(`${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=5&exclude=current,minutely,hourly&appid=${apiKey}`)
-  const data = await res2.json();
-  console.log(data);
+  try {
+    const res = await fetch(`${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=5&exclude=current,minutely,hourly&appid=${apiKey}`)
+    const data = await res.json();
+    for (let i = 1; i <= 6; i++) {
+      const UNIX_timestamp = data.daily[i].dt;
+      const minTemp = Math.round(data.daily[i].temp.min);
+      const maxTemp = Math.round(data.daily[i].temp.max);
+      const day = timeConverter(UNIX_timestamp);
+      const sky = data.daily[i].weather[0].id;
+      const length = 3;
+      const dayAb = day.substring(0, length);
 
-  for (let i = 1; i <= 6; i++) {
-    let UNIX_timestamp = data.daily[i].dt;
-    let minTemp = Math.round(data.daily[i].temp.min);
-    let maxTemp = Math.round(data.daily[i].temp.max);
-    // console.log(timeConverter(UNIX_timestamp));
-    let day = timeConverter(UNIX_timestamp);
-    const length = 3;
-    let sky = data.daily[i].weather[0].id;
-    const dayAb = day.substring(0, length);
-
-    document.querySelector('.day-' + i).textContent = dayAb + ':';
-    document.querySelector(`#day-${i}-conditions`).src = 'images/' + icons(sky);
-    // document.querySelector('.day-' + i + 'conditions').src = icons(sky);
-    document.querySelector(`.low-temp-day-${i}`).textContent = `L: ${minTemp}`;
-    document.querySelector(`.high-temp-day-${i}`).textContent = `H: ${maxTemp}`;
+      document.querySelector(`.day-${i}`).textContent = `${dayAb}:`;
+      document.querySelector(`#day-${i}-conditions`).src = `images/${icons(sky)}`;
+      document.querySelector(`.low-temp-day-${i}`).textContent = `L: ${minTemp}`;
+      document.querySelector(`.high-temp-day-${i}`).textContent = `H: ${maxTemp}`;
+    }
+  } catch (error) {
+    // throw error;
+    // appropriately handle the error
+    console.log('error', error);
   }
 }
+

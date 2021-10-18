@@ -112,4 +112,26 @@ input {
 
 .felt {
   margin: 0.625rem 0;
+  width: 14.25rem;
+}
+
+.response {
+  height: 1.875rem;
+  width: 100%;
+  border-radius: 0;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-width: 0.1875rem;
+  border-color: #000000;
+}
+
+.past-condition {
+  margin-left: 1.875rem;
+  width: 4.396875rem;
+  height: 3.68375rem;
+}
+
+.past-temp {
+  margin-left: 3.125rem;
+  font-size: 4rem;
 }
