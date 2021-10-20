@@ -1,12 +1,15 @@
 // Express to run server and routes
+require('dotenv').config();
 const express = require('express');
-
+const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
+const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
 // Start up an instance of app
 const app = express();
 
 /* Dependencies */
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const { json } = require('express');
 
 /* Middleware*/
 //Here we are configuring express to use body-parser as middle-ware.
@@ -29,21 +32,46 @@ const server = app.listen(port, listening);
 
 let data = {};
 
-// const addFeelings = (req, res) => {
-//   console.log(req.body);
-//   return res.send(data);
-// }
-app.get('/', (req, res) => {
-  console.log('here');
-  res.send('Hi');
-});
-// app.post('/getData', addFeelings);
-
-app.post('/api', (req, res) => {
-  console.log('Hello World');
-  console.log(req);
+// Hide the api on server
+const weatherApi = async (req, res) => {
   console.log(req.body);
-  return res.send(data);
+  const apiUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
+  const { zip } = req.body;
+  const apiRes = `${apiUrl}${zip}&units=imperial&cnt=5&appid=${apiKey}`;
+  const fetchResponse = await fetch(apiRes);
+  const obj = await fetchResponse.json();
+  return res.send(obj);
+};
+
+app.post('/getWeather', weatherApi);
+
+const fiveDayApi = async (req, res) => {
+  console.log(req.body);
+  const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
+  const { lat } = req.body;
+  const { lon } = req.body;
+  const apiRes = `${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=5&exclude=current,minutely,hourly&appid=${apiKey}`;
+  const fetchResponse = await fetch(apiRes);
+  const obj = await fetchResponse.json();
+  // console.log(obj);
+  return res.send(obj);
+};
+
+app.post('/getFiveDay', fiveDayApi);
+
+// POST request
+const postData = (req, res) => {
+  data = req.body;
   console.log(data);
-  res.send({ status: 'ok' });
-})
+  // return res.send(data);
+};
+
+app.post('/api', postData)
+
+// GET request
+const thing = (req, res) => {
+  console.log('sending info');
+  return res.send(data);
+};
+
+app.get('/returnData', thing);

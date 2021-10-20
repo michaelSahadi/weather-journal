@@ -1,8 +1,8 @@
-const apiUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
-const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
+// const apiUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
+// const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
 const input = document.querySelector('#zip');
 const buttonInput = document.querySelector('.submit');
-const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
+// const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
 
 // Enter key and Click event
 input.addEventListener('keyup', function (event) {
@@ -14,13 +14,18 @@ input.addEventListener('keyup', function (event) {
 
 // Grab data
 document.getElementById('generate').onclick = function () {
-  const userZip = document.querySelector('#zip').value;
-  getWeather(apiUrl, userZip, apiKey)
+  const zip = document.querySelector('#zip').value;
+  // getWeather(apiUrl, userZip, apiKey)
+  getWeather(zip)
     .then(function (obj) {
       const lon = obj.coord.lon;
       const lat = obj.coord.lat;
-      getForecast(fiveDayUrl, lat, lon, apiKey);
+      getForecast(lat, lon)
+      // console.log('yo');
     })
+    .then(
+      journal()
+    )
 
 }
 // Click event for the submit button
@@ -42,14 +47,14 @@ const timeConverter = (UNIX_timestamp) => {
   // const min = a.getMinutes();
   // const sec = a.getSeconds();
   // const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
-  console.log(date);
+  // console.log(date);
   const i = 0;
   const data = { list: [{ dt: UNIX_timestamp }] };
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const dayNum = new Date(data.list[i].dt * 1000).getDay();
   const result = days[dayNum];
-  console.log(data);
-  console.log(result);
+  // console.log(data);
+  // console.log(result);
   return result;
 };
 
@@ -126,11 +131,10 @@ const icons = (sky) => {
 }
 
 // Current conditions & UI update
-const getWeather = async (apiUrl, userZip, apiKey) => {
+const getWeather = async (zip) => {
+  const apiUrl = await postServer('/getWeather', { zip });
   try {
-    const res = await fetch(`${apiUrl}${userZip}&units=imperial&cnt=5&appid=${apiKey}`)
-    const obj = await res.json();
-    // console.log(obj);
+    const obj = apiUrl;
     const userFeeling = document.querySelector('#feelings').value;
     const lon = obj.coord.lon;
     const lat = obj.coord.lat;
@@ -145,7 +149,7 @@ const getWeather = async (apiUrl, userZip, apiKey) => {
     document.querySelector('#hi').textContent = maxTemp;
     document.querySelector('.current-conditions').src = `images/${icons(sky)}`;
 
-    const data = { minTemp, maxTemp, userFeeling };
+    const data = { currentTemp, sky, userFeeling };
     const options = {
       method: 'POST',
       credentials: 'same-origin',
@@ -155,7 +159,8 @@ const getWeather = async (apiUrl, userZip, apiKey) => {
       body: JSON.stringify(data)
     };
 
-    console.log(options);
+    // // console.log(options);
+    // postServer('/api', { data });
     fetch('/api', options);
 
     return obj;
@@ -167,10 +172,11 @@ const getWeather = async (apiUrl, userZip, apiKey) => {
 };
 
 // Five day forcast & UI update
-const getForecast = async (fiveDayUrl, lat, lon, apiKey) => {
+const getForecast = async (lat, lon,) => {
+  const res = await postServer('/getFiveDay', { lat, lon });
+  // console.log('hello');
   try {
-    const res = await fetch(`${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=5&exclude=current,minutely,hourly&appid=${apiKey}`)
-    const data = await res.json();
+    const data = res;
     for (let i = 1; i <= 6; i++) {
       const UNIX_timestamp = data.daily[i].dt;
       const minTemp = Math.round(data.daily[i].temp.min);
@@ -192,3 +198,51 @@ const getForecast = async (fiveDayUrl, lat, lon, apiKey) => {
   }
 }
 
+const journal = async () => {
+  const request = await fetch('/returnData');
+  console.log(request);
+  try {
+    const journalData = await request.json();
+    const pastTemp = journalData.currentTemp;
+    const pastFeelings = journalData.userFeeling;
+    const pastSky = journalData.sky;
+    console.log(pastTemp);
+    // console.log(journalData);
+
+    document.querySelector('.response').textContent = pastFeelings;
+    document.querySelector('.past-temp').textContent = `${pastTemp}\u00B0`;
+    document.querySelector('.past-condition').src = `images/${icons(pastSky)}`;
+    // detailsDiv.classList.add('entryHolder');
+    // cityContent.innerHTML = weatherData.thecity;
+    // dateContent.innerHTML = `Today\'s date: ${weatherData.date}`;
+    // mainContent.innerHTML = `Type of Weather: ${weatherData.main}`;
+    // tempContent.innerHTML = `The temperature is ${weatherData.temp}°C`;
+    // feelingContent.innerHTML = `I\'m feeling ${weatherData.feeling}`;
+  } catch (error) {
+    console.log('The UI could not be updated', error);
+  }
+}
+
+
+
+const postServer = async (url = '', data = {}) => {
+  // console.log(data);
+  // console.log(url);
+  const resp = await fetch(url, {
+    method: 'POST',
+    credentials: "same-origin",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  try {
+    // console.log(resp)
+    const response = await resp.json();
+    console.log(response)
+    return response;
+  } catch (error) {
+    console.log(`error: ${error}`);
+  }
+}
