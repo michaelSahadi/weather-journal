@@ -15,71 +15,82 @@
 </head>
 
 <body>
-  <div class="today">
-    <div class="user-input">
-      <h1 class="feel">Today I feel...</h1>
-      <!-- <label for="feel">Today I feel...</label> -->
-      <input type="text" class="input-stuff" id="feelings" placeholder="I'm hot today" rows="2">
-      <!-- <textarea class="input-stuff" id="input-feelings" width="100%"></textarea> -->
-      <p class="zip-code">Zip Code</p>
-      <input type="text" class="input-stuff" id="zip" placeholder="Enter Zip Code Here">
-      <button class="submit" id="generate" value="submit">submit</button>
-    </div>
-    <div class="current">
-      <img class="current-conditions" src="images/thunderstorm.svg" alt="">
-      <p class="date"></p>
-      <div class="HL">
-        <p class="low-temp-main">L: <span id="low">68</span></p>
-        <p class="high-temp-main">H: <span id="hi">91</span></p>
+  <main>
+
+    <div class="entryHolder">
+      <div class="user-input">
+        <h1 class="feel">Today I feel...</h1>
+        <!-- <label for="feel">Today I feel...</label> -->
+        <input type="text" class="input-stuff" id="feelings" placeholder="I'm hot today" rows="2">
+        <!-- <textarea class="input-stuff" id="input-feelings" width="100%"></textarea> -->
+        <p class="zip-code">Zip Code</p>
+        <input type="text" class="input-stuff" id="zip" placeholder="Enter Zip Code Here">
+        <button class="submit" id="generate" value="submit">submit</button>
       </div>
-      <h1 class="current-temp">79&deg</h1>
+      <div class="current">
+        <div class="junk">
+          <img class="current-conditions" src="images/thunderstorm.svg" alt="">
+          <p class="date">15 Oct 1979</p>
+        </div>
+        <div class="HL">
+          <p class="low-temp-main">L : <span id="low">68</span></p>
+          <p class="high-temp-main">H : <span id="hi">91</span></p>
+        </div>
+        <h1 class="current-temp">79&deg</h1>
+      </div>
     </div>
-  </div>
-  <div class="bar" id="upper"></div>
-  <div class="5-day">
-    <div class="dividing-line"></div>
-    <div id="day-1" class="day">
-      <p class="day-1">Wed</p>
-      <img src="images/few-clouds.svg" alt="" class="weather-icon" id="day-1-conditions">
-      <p class="low-temp-day-1">L: <span id="5-d-low"></span></p>
-      <p class="high-temp-day-1">H: <span id="5-d-hi"></span></p>
+    <div class="bar" id="upper"></div>
+    <div class="five-day">
+      <div class="dividing-line"></div>
+      <div id="day-1" class="day">
+        <p class="day-1">Wed</p>
+        <img src="images/few-clouds.svg" alt="" class="weather-icon" id="day-1-conditions">
+        <p class="low-temp-day-1">L: <span id="5-d-low"></span></p>
+        <p class="high-temp-day-1">H : <span id="5-d-hi"></span></p>
+      </div>
+      <div id="day-2" class="day">
+        <p class="day-2">Wed</p>
+        <img src="images/broken-clouds.svg" alt="" class="weather-icon" id="day-2-conditions">
+        <p class="low-temp-day-2">L : <span id="5-d-low"></span></p>
+        <p class="high-temp-day-2">H : <span id="5-d-hi"></span></p>
+      </div>
+      <div id="day-3" class="day">
+        <p class="day-3">Wed</p>
+        <img src="images/sunny.svg" alt="" class="weather-icon" id="day-3-conditions">
+        <p class="low-temp-day-3">L : <span id="5-d-low"></span></p>
+        <p class="high-temp-day-3">H : <span id="5-d-hi"></span></p>
+      </div>
+      <div id="day-4" class="day">
+        <p class="day-4">Wed</p>
+        <img src="images/windy.svg" alt="" class="weather-icon" id="day-4-conditions">
+        <p class="low-temp-day-4">L : <span id="5-d-low"></span></p>
+        <p class="high-temp-day-4">H : <span id="5-d-hi"></span></p>
+      </div>
+      <div id="day-5" class="day">
+        <p class="day-5">Wed</p>
+        <img src="images/rain.svg" alt="" class="weather-icon" id="day-5-conditions">
+        <p class="low-temp-day-5">L : <span id="5-d-low"></span></p>
+        <p class="high-temp-day-5">H : <span id="5-d-hi"></span></p>
+      </div>
     </div>
-    <div id="day-2" class="day">
-      <p class="day-2">Wed</p>
-      <img src="images/broken-clouds.svg" alt="" class="weather-icon" id="day-2-conditions">
-      <p class="low-temp-day-2">L: <span id="5-d-low"></span></p>
-      <p class="high-temp-day-2">H: <span id="5-d-hi"></span></p>
+    <div class="bar" id="lower"></div>
+    <div class="yesterday">
+      <div class="user-response">
+        <h1 class="felt">Most recent post...</h1>
+        <div class="res-holder">
+          <p class="response">Really really sleepy</p>
+        </div>
+      </div>
+      <div class="yesturday-conditions">
+        <div class="junk-past">
+          <img src="images/scattered-clouds.svg" alt="" class="past-condition">
+          <p class="date-past">15 Oct 1979</p>
+        </div>
+        <div class="PHL"></div>
+        <h1 class="past-temp">82&deg</h1>
+      </div>
     </div>
-    <div id="day-3" class="day">
-      <p class="day-3">Wed</p>
-      <img src="images/sunny.svg" alt="" class="weather-icon" id="day-3-conditions">
-      <p class="low-temp-day-3">L: <span id="5-d-low"></span></p>
-      <p class="high-temp-day-3">H: <span id="5-d-hi"></span></p>
-    </div>
-    <div id="day-4" class="day">
-      <p class="day-4">Wed</p>
-      <img src="images/windy.svg" alt="" class="weather-icon" id="day-4-conditions">
-      <p class="low-temp-day-4">L: <span id="5-d-low"></span></p>
-      <p class="high-temp-day-4">H: <span id="5-d-hi"></span></p>
-    </div>
-    <div id="day-5" class="day">
-      <p class="day-5">Wed</p>
-      <img src="images/rain.svg" alt="" class="weather-icon" id="day-5-conditions">
-      <p class="low-temp-day-5">L: <span id="5-d-low"></span></p>
-      <p class="high-temp-day-5">H: <span id="5-d-hi"></span></p>
-    </div>
-  </div>
-  <div class="bar" id="lower"></div>
-  <div class="yesterday">
-    <div class="user-response">
-      <h1 class="felt">Most recent post...</h1>
-      <p class="response">Really really sleepy</p>
-    </div>
-    <div class="yesturday-conditions">
-      <img src="images/scattered-clouds.svg" alt="" class="past-condition">
-      <h1 class="past-temp">82&deg</h1>
-    </div>
-  </div>
+  </main>
   <script src="app.js"></script>
 </body>
 

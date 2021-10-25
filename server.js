@@ -30,7 +30,7 @@ const listening = () => {
 
 const server = app.listen(port, listening);
 
-let data = {};
+let projectData = {};
 
 // Hide the api on server
 const weatherApi = async (req, res) => {
@@ -50,7 +50,7 @@ const fiveDayApi = async (req, res) => {
   const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
   const { lat } = req.body;
   const { lon } = req.body;
-  const apiRes = `${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=5&exclude=current,minutely,hourly&appid=${apiKey}`;
+  const apiRes = `${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=10&exclude=current,minutely,hourly&appid=${apiKey}`;
   const fetchResponse = await fetch(apiRes);
   const obj = await fetchResponse.json();
   // console.log(obj);
@@ -59,19 +59,31 @@ const fiveDayApi = async (req, res) => {
 
 app.post('/getFiveDay', fiveDayApi);
 
+// const map = async (req, res) => {
+//   // const { lat } = req.body;
+//   // const { lon } = req.body;
+//   const mapUrl = `https://tile.openweathermap.org/map/precipitation_new/3/5/3.png?appid=${apiKey}`;
+//   const fetchResponse = await fetch(mapUrl);
+//   const obj = await fetchResponse.json();
+//   console.log(obj);
+//   return res.send(obj);
+// }
+
+// app.post('/map', map);
+
 // POST request
 const postData = (req, res) => {
   data = req.body;
-  console.log(data);
+  console.log(projectData);
   // return res.send(data);
 };
 
 app.post('/api', postData)
 
 // GET request
-const thing = (req, res) => {
+const getData = (req, res) => {
   console.log('sending info');
-  return res.send(data);
+  return res.send(projectData);
 };
 
-app.get('/returnData', thing);
+app.get('/returnData', getData);

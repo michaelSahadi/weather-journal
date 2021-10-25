@@ -26,8 +26,8 @@ input {
   border-color: #000000;
 }
 
-.today {
-  margin: 1.25rem 1.25rem;
+.entryHolder {
+  margin: 0.625rem 1.25rem;
   display: grid;
   grid-template-columns: 1fr 0.75fr;
 }
@@ -51,13 +51,36 @@ input {
     "HL CT";
 }
 
+.junk {
+  margin-bottom: 1.25rem;
+  grid-area: current;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.junk-past {
+  margin-bottom: 1.25rem;
+  grid-area: current;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .current-conditions {
   margin-left: 1.875rem;
   height: 6.625rem;
   width: 5.375rem;
-  grid-area: current;
+  /* grid-area: current; */
 }
 
+.date {
+  margin-left: 1.875rem;
+}
+
+.date-past {
+  margin-left: 1.875rem;
+}
 .HL {
   grid-area: HL;
 }
@@ -94,7 +117,7 @@ input {
 }
 
 #upper {
-  margin-top: -1.75rem;
+  margin-top: -5rem;
 }
 
 .day {
@@ -112,26 +135,188 @@ input {
 
 .felt {
   margin: 0.625rem 0;
-  width: 14.25rem;
 }
 
-.response {
+.res-holder {
   height: 1.875rem;
   width: 100%;
+  border: 0.1875rem solid black;
   border-radius: 0;
   border-right-style: hidden;
   border-left-style: hidden;
-  border-width: 0.1875rem;
-  border-color: #000000;
+  display: flex;
+  align-items: center;
+}
+
+.response {
+  inline-size: 11.25rem;
+  overflow-wrap: break-word;
+  font-weight: bold;
+}
+
+.yesturday-conditions {
+  margin-left: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "current current"
+    "HL PT";
 }
 
 .past-condition {
   margin-left: 1.875rem;
-  width: 4.396875rem;
-  height: 3.68375rem;
+  height: 6.625rem;
+  width: 5.375rem;
 }
 
 .past-temp {
-  margin-left: 3.125rem;
   font-size: 4rem;
+  grid-area: PT;
+}
+
+.PHL {
+  grid-area: HL;
+  width: 40px;
+  height: 50px;
+}
+
+@media (min-width: 64rem) /* and (max-device-height: 48rem) */ {
+  .bar {
+    display: none;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 0.75fr 1fr;
+    grid-template-areas:
+      "today 5-day"
+      "today yest";
+  }
+  .entryHolder {
+    grid-area: today;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "conditions"
+      "feel";
+  }
+
+  .feel {
+    width: 22.5625rem;
+    font-size: 4rem;
+    font-weight: bold;
+  }
+
+  .input-stuff {
+    width: 22.5625rem;
+  }
+
+  .current {
+    margin-left: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "conditions temp"
+      "conditions HL";
+  }
+  .current-conditions {
+    width: 250px;
+    height: 327px;
+    margin: 0;
+    stroke-width: 2px;
+  }
+
+  .date {
+    margin: 15px 0 0 0;
+  }
+
+  .junk {
+    grid-area: conditions;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .current-temp {
+    grid-area: temp;
+    font-size: 8rem;
+    /* margin-left: 1.875rem; */
+    margin: 3.75rem 0 0 1.875rem;
+  }
+
+  .HL {
+    grid-area: HL;
+    display: flex;
+    flex-direction: row;
+    margin-left: 1.875rem;
+    /* justify-content: space-between; */
+  }
+  .user-input {
+    margin-top: -30px;
+    grid-area: feel;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .current {
+    grid-area: conditions;
+  }
+
+  .high-temp-main {
+    width: 115px;
+    margin: 0 0 0 1.875rem;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .low-temp-main {
+    width: 115px;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .yesterday {
+    margin: 0;
+    grid-area: yest;
+  }
+
+  .yesturday-conditions {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-response {
+    margin-top: 6px;
+  }
+
+  .felt {
+    margin: 0.8125rem 0;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .five-day {
+    margin-top: 3.75rem;
+    grid-area: 5-day;
+  }
+
+  /* .user-response {
+    /* margin-top: 4rem; */
+  /* }  */
+
+  .response {
+    all: revert;
+  }
+
+  .junk-past {
+    all: revert;
+  }
+
+  .past-temp {
+    margin-left: 1.875rem;
+  }
 }
