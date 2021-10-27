@@ -2,6 +2,9 @@ const input = document.querySelector('#zip');
 const buttonInput = document.querySelector('.submit');
 const entryHolder = document.querySelector('.entryHolder');
 const current = document.querySelector('.current');
+const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
+const apiUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
+const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
 
 // Enter key and Click event
 input.addEventListener('keyup', function (event) {
@@ -86,9 +89,12 @@ const icons = (icon) => {
 
 // Current conditions & UI update
 const getWeather = async (zip) => {
-  const apiUrl = await postServer('/getWeather', { zip });
+  // const apiUrl = await postServer('/getWeather', { zip });
+  const apiRes = `${apiUrl}${zip}&units=imperial&cnt=5&appid=${apiKey}`;
+  const fetchResponse = await fetch(apiRes);
+  const obj = await fetchResponse.json();
   try {
-    const obj = apiUrl;
+    // const obj = apiUrl;
     console.log(obj);
     const userFeeling = document.querySelector('#feelings').value;
     const lon = obj.coord.lon;
@@ -132,11 +138,12 @@ const getWeather = async (zip) => {
 
 // Five day forcast & UI update
 const getForecast = async (lat, lon,) => {
-  const res = await postServer('/getFiveDay', { lat, lon });
-  // const map = await postServer('/map', { lat, lon });
-  console.log(res);
+  // const res = await postServer('/getFiveDay', { lat, lon });
+  const apiRes = `${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=10&exclude=current,minutely,hourly&appid=${apiKey}`;
+  const fetchResponse = await fetch(apiRes);
+  const data = await fetchResponse.json();
 
-  const data = res;
+  // const data = res;
   for (let i = 1; i <= 6; i++) {
     const UNIX_timestamp = data.daily[i].dt;
     const minTemp = Math.round(data.daily[i].temp.min);
@@ -157,6 +164,7 @@ const getForecast = async (lat, lon,) => {
 
 const journal = async () => {
   const request = await fetch('/returnData');
+
   console.log(request);
 
   const journalData = await request.json();
