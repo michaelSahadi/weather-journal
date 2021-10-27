@@ -34,7 +34,6 @@ let projectData = {};
 
 // Hide the api on server
 const weatherApi = async (req, res) => {
-  console.log(req.body);
   const apiUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
   const { zip } = req.body;
   const apiRes = `${apiUrl}${zip}&units=imperial&cnt=5&appid=${apiKey}`;
@@ -53,27 +52,14 @@ const fiveDayApi = async (req, res) => {
   const apiRes = `${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=10&exclude=current,minutely,hourly&appid=${apiKey}`;
   const fetchResponse = await fetch(apiRes);
   const obj = await fetchResponse.json();
-  // console.log(obj);
   return res.send(obj);
 };
 
 app.post('/getFiveDay', fiveDayApi);
 
-// const map = async (req, res) => {
-//   // const { lat } = req.body;
-//   // const { lon } = req.body;
-//   const mapUrl = `https://tile.openweathermap.org/map/precipitation_new/3/5/3.png?appid=${apiKey}`;
-//   const fetchResponse = await fetch(mapUrl);
-//   const obj = await fetchResponse.json();
-//   console.log(obj);
-//   return res.send(obj);
-// }
-
-// app.post('/map', map);
-
 // POST request
 const postData = (req, res) => {
-  data = req.body;
+  projectDatadata = req.body;
   console.log(projectData);
   // return res.send(data);
 };
@@ -82,6 +68,7 @@ app.post('/api', postData)
 
 // GET request
 const getData = (req, res) => {
+  console.log(projectData);
   console.log('sending info');
   return res.send(projectData);
 };

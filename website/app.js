@@ -1,5 +1,7 @@
 const input = document.querySelector('#zip');
 const buttonInput = document.querySelector('.submit');
+const entryHolder = document.querySelector('.entryHolder');
+const current = document.querySelector('.current');
 
 // Enter key and Click event
 input.addEventListener('keyup', function (event) {
@@ -51,87 +53,30 @@ const timeConverter = (UNIX_timestamp) => {
 
 // Icon function
 const icons = (icon) => {
-  // const condition = 8;
   let skyIcon = "images/thunderstorm.svg";
-  // const id = `a${sky}`;
   const id = `a${icon}`;
-  console.log(id);
   const code = {
-    // a200: 'thunderstorm.svg',
-    // a201: 'thunderstorm.svg',
-    // a202: 'thunderstorm.svg',
-    // a210: 'thunderstorm.svg',
-    // a211: 'thunderstorm.svg',
-    // a212: 'thunderstorm.svg',
-    // a221: 'thunderstorm.svg',
-    // a230: 'thunderstorm.svg',
-    // a231: 'thunderstorm.svg',
-    // a232: 'thunderstorm.svg',
+
     a11d: 'thunderstorm.svg',
 
-    // a300: 'rain.svg',
-    // a301: 'rain.svg',
-    // a302: 'rain.svg',
-    // a310: 'rain.svg',
-    // a311: 'rain.svg',
-    // a312: 'rain.svg',
-    // a313: 'rain.svg',
-    // a314: 'rain.svg',
-    // a321: 'rain.svg',
-    // a500: 'rain.svg',
-    // a501: 'rain.svg',
-    // a502: 'rain.svg',
-    // a503: 'rain.svg',
-    // a504: 'rain.svg',
-    // a511: 'rain.svg',
-    // a520: 'rain.svg',
-    // a521: 'rain.svg',
-    // a522: 'rain.svg',
-    // a531: 'rain.svg',
     a09d: 'rain.svg',
     a10d: 'rain.svg',
     a13d: 'rain.svg',
     a09d: 'rain.svg',
 
-    // a600: 'snow.svg',
-    // a601: 'snow.svg',
-    // a602: 'snow.svg',
-    // a611: 'snow.svg',
-    // a612: 'snow.svg',
-    // a613: 'snow.svg',
-    // a615: 'snow.svg',
-    // a616: 'snow.svg',
-    // a620: 'snow.svg',
-    // a621: 'snow.svg',
-    // a622: 'snow.svg',
     a13d: 'snow.svg',
 
-    // a701: 'mist.svg',
-    // a711: 'mist.svg',
-    // a721: 'mist.svg',
-    // a731: 'mist.svg',
-    // a741: 'mist.svg',
-    // a751: 'mist.svg',
-    // a761: 'mist.svg',
-    // a762: 'mist.svg',
-    // a771: 'mist.svg',
-    // a781: 'mist.svg',
     a50d: 'mist.svg',
 
-    // a800: 'sunny.svg',
     a01d: 'sunny.svg',
     a01n: 'sunny-night.svg',
 
-    // a801: 'scattered-clouds.svg',
     a02d: 'scattered-clouds.svg',
     a02n: 'scattered-clouds-night.svg',
-    // a802: 'scattered-clouds.svg',
     a03d: 'scattered-clouds.svg',
 
-    // a803: 'broken-clouds.svg',
     a04d: 'broken-clouds.svg',
     a04n: 'broken-clouds.svg',
-    // a804: 'broken-clouds.svg',
   };
 
   skyIcon = code[id];
@@ -158,12 +103,12 @@ const getWeather = async (zip) => {
     const UNIX_timestamp = obj.dt;
     const date = timeConverter(UNIX_timestamp);
     const currentDate = date.time;
-    document.querySelector('.current-temp').textContent = `${currentTemp}\u00B0`;
+
+    document.querySelector('.temp').textContent = `${currentTemp}\u00B0`;
     document.querySelector('.date').textContent = currentDate;
     document.querySelector('#low').textContent = minTemp;
     document.querySelector('#hi').textContent = maxTemp;
     document.querySelector('.current-conditions').src = `images/${icons(icon)}`;
-
     const data = { currentTemp, icon, userFeeling, date };
     const options = {
       method: 'POST',
@@ -226,7 +171,6 @@ const journal = async () => {
     const datePast = journalData.date.time;
     // console.log(datePast);
     // console.log(journalData);
-
     document.querySelector('.response').textContent = pastFeelings;
     document.querySelector('.past-temp').textContent = `${pastTemp}\u00B0`;
     document.querySelector('.past-condition').src = `images/${icons(pastSky)}`;
