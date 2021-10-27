@@ -135,49 +135,41 @@ const getForecast = async (lat, lon,) => {
   const res = await postServer('/getFiveDay', { lat, lon });
   // const map = await postServer('/map', { lat, lon });
   console.log(res);
-  try {
-    const data = res;
-    for (let i = 1; i <= 6; i++) {
-      const UNIX_timestamp = data.daily[i].dt;
-      const minTemp = Math.round(data.daily[i].temp.min);
-      const maxTemp = Math.round(data.daily[i].temp.max);
-      const day = timeConverter(UNIX_timestamp);
-      const sky = data.daily[i].weather[0].icon;
-      const length = 3;
-      // const dayAb = day.substring(0, length);
-      const dayAb = day.result.substring(0, length);
-      console.log(dayAb);
-      document.querySelector(`.day-${i}`).textContent = `${dayAb}:`;
-      document.querySelector(`#day-${i}-conditions`).src = `images/${icons(sky)}`;
-      document.querySelector(`.low-temp-day-${i}`).textContent = `L: ${minTemp}`;
-      document.querySelector(`.high-temp-day-${i}`).textContent = `H: ${maxTemp}`;
-      // document.querySelector('.map').textContent = map;
-    }
-  } catch (error) {
-    // throw error;
-    // appropriately handle the error
-    console.log('error', error);
+
+  const data = res;
+  for (let i = 1; i <= 6; i++) {
+    const UNIX_timestamp = data.daily[i].dt;
+    const minTemp = Math.round(data.daily[i].temp.min);
+    const maxTemp = Math.round(data.daily[i].temp.max);
+    const day = timeConverter(UNIX_timestamp);
+    const sky = data.daily[i].weather[0].icon;
+    const length = 3;
+    // const dayAb = day.substring(0, length);
+    const dayAb = day.result.substring(0, length);
+    console.log(dayAb);
+    document.querySelector(`.day-${i}`).textContent = `${dayAb}:`;
+    document.querySelector(`#day-${i}-conditions`).src = `images/${icons(sky)}`;
+    document.querySelector(`.low-temp-day-${i}`).textContent = `L: ${minTemp}`;
+    document.querySelector(`.high-temp-day-${i}`).textContent = `H: ${maxTemp}`;
+    // document.querySelector('.map').textContent = map;
   }
 }
 
 const journal = async () => {
   const request = await fetch('/returnData');
   console.log(request);
-  try {
-    const journalData = await request.json();
-    const pastTemp = journalData.currentTemp;
-    const pastFeelings = journalData.userFeeling;
-    const pastSky = journalData.icon;
-    const datePast = journalData.date.time;
-    // console.log(datePast);
-    // console.log(journalData);
-    document.querySelector('.response').textContent = pastFeelings;
-    document.querySelector('.past-temp').textContent = `${pastTemp}\u00B0`;
-    document.querySelector('.past-condition').src = `images/${icons(pastSky)}`;
-    document.querySelector('.date-past').textContent = datePast;
-  } catch (error) {
-    console.log('The UI could not be updated', error);
-  }
+
+  const journalData = await request.json();
+  const pastTemp = journalData.currentTemp;
+  const pastFeelings = journalData.userFeeling;
+  const pastSky = journalData.icon;
+  const datePast = journalData.date.time;
+  // console.log(datePast);
+  // console.log(journalData);
+  document.querySelector('.response').textContent = pastFeelings;
+  document.querySelector('.past-temp').textContent = `${pastTemp}\u00B0`;
+  document.querySelector('.past-condition').src = `images/${icons(pastSky)}`;
+  document.querySelector('.date-past').textContent = datePast;
 }
 
 
