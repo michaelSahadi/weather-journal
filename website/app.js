@@ -155,8 +155,6 @@ const getForecast = async (lat, lon, api) => {
     document.querySelector(`.low-temp-day-${i}`).innerHTML = `L: ${minTemp}`;
     document.querySelector(`.high-temp-day-${i}`).innerHTML = `H: ${maxTemp}`;
   }
-
-
 }
 
 // Previous entry
