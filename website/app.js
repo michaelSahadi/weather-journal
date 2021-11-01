@@ -155,12 +155,14 @@ const getForecast = async (lat, lon, api) => {
     document.querySelector(`.low-temp-day-${i}`).innerHTML = `L: ${minTemp}`;
     document.querySelector(`.high-temp-day-${i}`).innerHTML = `H: ${maxTemp}`;
   }
+  return data;
 }
 
 // Previous entry
 const journal = async () => {
   const request = await fetch('/returnData');
   const journalData = await request.json();
+  // console.log(journalData);
   const pastTemp = journalData.data.currentTemp;
   const pastFeelings = journalData.data.userFeeling;
   const pastSky = journalData.data.icon;
