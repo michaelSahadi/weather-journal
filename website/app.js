@@ -10,26 +10,40 @@ const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
 const btn = document.getElementById('generate');
 
 // Enter key and Click event
-input.addEventListener('keyup', function (event) {
+input.addEventListener('keyup', (event) => {
   if (event.keyCode === 13) {
     event.preventDefault();
     document.getElementById('generate').click();
   }
 });
 
+btn.addEventListener('click', btnFunction)
+
 // Grab data
-btn.addEventListener('click', () => {
+function btnFunction() {
   const zip = document.querySelector('#zip').value;
   getWeather(apiUrl, zip, apiKey)
     .then((obj) => {
       const lon = obj.coord.lon;
       const lat = obj.coord.lat;
       getForecast(lat, lon, apiKey);
-    })
-    .then(
       journal()
-    )
-})
+    })
+}
+
+// Grab data
+// btn.addEventListener('click', () => {
+//   const zip = document.querySelector('#zip').value;
+//   getWeather(apiUrl, zip, apiKey)
+//     .then((obj) => {
+//       const lon = obj.coord.lon;
+//       const lat = obj.coord.lat;
+//       getForecast(lat, lon, apiKey);
+//     })
+//     .then(
+//       journal()
+//     )
+// })
 
 // Convert Unix time code to something a Humon can read
 const timeConverter = (UNIX_timestamp) => {
@@ -162,7 +176,6 @@ const getForecast = async (lat, lon, api) => {
 const journal = async () => {
   const request = await fetch('/returnData');
   const journalData = await request.json();
-  // console.log(journalData);
   const pastTemp = journalData.data.currentTemp;
   const pastFeelings = journalData.data.userFeeling;
   const pastSky = journalData.data.icon;
