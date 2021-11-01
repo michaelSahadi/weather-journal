@@ -62,15 +62,17 @@ let projectData = {};
 const postData = (req, res) => {
   projectData = req.body;
   // console.log(projectData);
-  // return res.send(data);
+  res.json({
+    status: 'success'
+  })
 };
 
 app.post('/api', postData)
 
 // GET request
 const getData = (req, res) => {
-  console.log(projectData);
   console.log('sending info');
+  console.log(projectData);
   return res.send(projectData);
 };
 
