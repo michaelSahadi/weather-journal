@@ -8,6 +8,7 @@ const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
 const apiUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
 const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
 const btn = document.getElementById('generate');
+
 // Enter key and Click event
 input.addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
@@ -138,8 +139,9 @@ const getForecast = async (lat, lon, api) => {
   let day;
   let sky;
   const length = 3;
-  // const foreCastDiv = document.querySelectorAll('.day');
-  for (let i = 1; i <= 6; i++) {
+
+  // Update forecast UI
+  for (let i = 1; i <= 5; i++) {
     UNIX_timestamp = data.daily[i].dt;
     minTemp = Math.round(data.daily[i].temp.min);
     maxTemp = Math.round(data.daily[i].temp.max);
@@ -157,6 +159,7 @@ const getForecast = async (lat, lon, api) => {
 
 }
 
+// Previous entry
 const journal = async () => {
   const request = await fetch('/returnData');
   const journalData = await request.json();
@@ -170,29 +173,7 @@ const journal = async () => {
   document.querySelector('.date-past').innerHTML = datePast;
 }
 
-// const getForecastUI = (data) => {
-//   let UNIX_timestamp;
-//   let minTemp;
-//   let maxTemp;
-//   let day;
-//   let sky;
-//   const length = 3;
-
-//   for (let i = 1; i <= 6; i++) {
-//     UNIX_timestamp = data.daily[i].dt;
-//     minTemp = Math.round(data.daily[i].temp.min);
-//     maxTemp = Math.round(data.daily[i].temp.max);
-//     day = timeConverter(UNIX_timestamp);
-//     sky = data.daily[i].weather[0].icon;
-//     const dayAb = day.result.substring(0, length);
-
-//     document.querySelector(`.day-${i}`).textContent = `${dayAb}:`;
-//     document.querySelector(`#day-${i}-conditions`).src = `images/${icons(sky)}`;
-//     document.querySelector(`.low-temp-day-${i}`).textContent = `L: ${minTemp}`;
-//     document.querySelector(`.high-temp-day-${i}`).textContent = `H: ${maxTemp}`;
-//   }
-// }
-
+//POST function 
 const postServer = async (url = '', data = {}) => {
   const resp = await fetch(url, {
     method: 'POST',
