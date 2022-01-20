@@ -4,10 +4,15 @@ const input = document.querySelector('#zip');
 const buttonInput = document.querySelector('.submit');
 const entryHolder = document.querySelector('.entryHolder');
 const current = document.querySelector('.current');
+nvm -v
 const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
 const apiUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
 const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
 const btn = document.getElementById('generate');
+let getWeather;
+let getForecast;
+let journal;
+let postServer;
 
 // Enter key and Click event
 input.addEventListener('keyup', (event) => {
@@ -32,17 +37,14 @@ function btnFunction() {
 }
 
 // Grab data
+
 // btn.addEventListener('click', () => {
 //   const zip = document.querySelector('#zip').value;
-//   getWeather(apiUrl, zip, apiKey)
-//     .then((obj) => {
-//       const lon = obj.coord.lon;
-//       const lat = obj.coord.lat;
-//       getForecast(lat, lon, apiKey);
-//     })
-//     .then(
-//       journal()
-//     )
+//   const obj = getWeather(apiUrl, zip, apiKey);
+//   const lon = obj.coord.lon;
+//   const lat = obj.coord.lat;
+//   const data = getForecast(lat, lon, apiKey);
+//   await journal();
 // })
 
 // Convert Unix time code to something a Humon can read
@@ -105,7 +107,7 @@ const icons = (icon) => {
 }
 
 // Current conditions & UI update
-const getWeather = async (url, zip, api) => {
+getWeather = async (url, zip, api) => {
   // const apiUrl = await postServer('/getWeather', { zip });
   const apiRes = `${url}${zip}&units=imperial&cnt=5&appid=${api}`;
   const fetchResponse = await fetch(apiRes);
@@ -141,7 +143,7 @@ const getWeather = async (url, zip, api) => {
 };
 
 // Five day forcast & UI update
-const getForecast = async (lat, lon, api) => {
+getForecast = async (lat, lon, api) => {
   // const res = await postServer('/getFiveDay', { lat, lon });
   const apiRes = `${fiveDayUrl}lat=${lat}&lon=${lon}&units=imperial&cnt=10&exclude=current,minutely,hourly&appid=${api}`;
   const fetchResponse = await fetch(apiRes);
@@ -173,7 +175,7 @@ const getForecast = async (lat, lon, api) => {
 }
 
 // Previous entry
-const journal = async () => {
+journal = async () => {
   const request = await fetch('/returnData');
   const journalData = await request.json();
   const pastTemp = journalData.data.currentTemp;
@@ -187,7 +189,7 @@ const journal = async () => {
 }
 
 //POST function 
-const postServer = async (url = '', data = {}) => {
+postServer = async (url = '', data = {}) => {
   const resp = await fetch(url, {
     method: 'POST',
     credentials: "same-origin",
