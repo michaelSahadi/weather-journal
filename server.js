@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
-// const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
+
 
 // Start up an instance of app
 const app = express();
