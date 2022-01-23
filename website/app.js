@@ -4,7 +4,7 @@ const input = document.querySelector('#zip');
 const buttonInput = document.querySelector('.submit');
 const entryHolder = document.querySelector('.entryHolder');
 const current = document.querySelector('.current');
-nvm -v
+
 const apiKey = '49dd336c6342a0fbf7eba30d6af0f432';
 const apiUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
 const fiveDayUrl = 'http://api.openweathermap.org/data/2.5/onecall?';
