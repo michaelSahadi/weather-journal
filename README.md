@@ -1,3 +1,5 @@
+![Preview](website/images/weather-preview.png)
+
 # weather-journal
 
 Udacity Front End project 3
